@@ -1,20 +1,17 @@
 package io.collective;
 
 import java.time.Clock;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+
 import java.util.Arrays;
 
 public class SimpleAgedCache {
-    private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private static final int INITIAL_CAPACITY = 10;
     private static final int GROWTH_FACTOR = 2;
 
     protected Object[] keys;
     protected Object[] values;
     protected long[] expirationTimes;
-    protected final Clock clock;
+    private final Clock clock;
     protected int size;
     private final ExpiredEntry expiredEntry;
 
@@ -25,15 +22,33 @@ public class SimpleAgedCache {
         this.expirationTimes = new long[INITIAL_CAPACITY];
         this.size = 0;
 
-        // Initialize the scheduler for cleanup
-        scheduler.scheduleAtFixedRate(this::runCleanupTask, 0, 1, TimeUnit.MINUTES);
-
         // Instantiate ExpiredEntry
-        this.expiredEntry = new ExpiredEntry(clock);
+        this.expiredEntry = new ExpiredEntry(this, clock);
     }
 
-    private void runCleanupTask() {
-        expiredEntry.cleanupExpiredEntries(keys, values, expirationTimes, size);
+    // Methods to access cache attributes
+    public Object[] getKeys() {
+        return keys;
+    }
+
+    public Object[] getValues() {
+        return values;
+    }
+
+    public long[] getExpirationTimes() {
+        return expirationTimes;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void runCleanupTask() {
+        expiredEntry.cleanupExpiredEntries();
     }
 
     public SimpleAgedCache() {
@@ -68,20 +83,12 @@ public class SimpleAgedCache {
     }
 
     public Object get(Object key) {
-        long currentTime = clock.millis();
         for (int i = 0; i < keys.length; i++) {
             if (keys[i] != null && keys[i].equals(key)) {
-                if (currentTime >= expirationTimes[i]) {
-                    keys[i] = null;
-                    values[i] = null;
-                    expirationTimes[i] = 0;
-                    size--;
-                    return null;
-                } else {
-                    return values[i];
-                }
+                return values[i];
             }
         }
         return null;
     }
+
 }
