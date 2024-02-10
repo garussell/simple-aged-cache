@@ -3,8 +3,8 @@ package io.collective;
 import java.time.Clock;
 
 public class ExpiredEntry {
-    private SimpleAgedCache cache;
-    private Clock clock;
+    private final SimpleAgedCache cache;
+    private final Clock clock;
 
     public ExpiredEntry(SimpleAgedCache cache, Clock clock) {
         this.cache = cache;
