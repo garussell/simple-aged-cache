@@ -1,68 +1,27 @@
-# Simple aged cache
+# Simple Aged Cache
 
-An exercise to help individuals new to modern software engineering practices understand the basics of
- test driven development.
+This is my implimentation of the "simple aged cache" from "Fundamental of Software Architecture for Big Data" class by Mike Barinek and Tyson Gern, lecturers in the Computer Science program at University of Colorado Boulder
 
-## Background
+## Setup
 
-The simple aged cache was one of the first bits of code that I paired on in the early 2000s while working at a
- telecommunications company. Ever since, I've been a fan of test driven development and pair programming.
+I added the repository to my local hardrive from a zip file provied in the coursework.  I the created a repository of my own for version control.  The project uses `Java` with `IntelliJ IDEA`.  The initial repo from class included the `.github` workflow - `build.yml`.  It also included `gradle` to automate the application build.  In addition, JUnit test suite with 4 failing tests came with the project.  The objective was to build the SimplelAgedCache in Java and/or Kotlin.  I chose Java due to some vague familiarity.
 
-Over the years that followed, I've attempted to introduce variations of the cache as part of the interview process
- at several companies. Most early attempts were fairly unsuccessful.
+## Implementation 
 
-While working at Gnip in 2009, the team heard about the now infamous Pivotal pairing interview.
-In response, we began interviewing candidates using a linked list. Which, as you may know, isn’t too far from
- implementing a cache. Unfortunately, the linked list also proved challenging mainly because we asked candidates
-  to do all the typing.
+This is a "simple" aged cache, which in my case means it hold data in a key-value store, each entry having an expiration time.  I imported the Arrays utility `import java.util.Arrays;` in order to accomplish this task.  In the There are two constants defined.  `INITIAL_CAPACITY` which is a default value of 10, and `GROWTH_FACTOR` which is used in the `.put` method to increase the storage capacity of the array when necessary. 
 
-In response, we introduced the simple aged cache as a whiteboard problem rather than as a live coding exercise. The move
- to a whiteboard was very successful, resulting in several new hires who ultimately led to Gnip’s success.
-  Rumor has it, the simple aged cache is still used as part of Twitter's technical interview after the Twitter
-   acquisition of Gnip.
+The constructors have private instance variables that include clock (import), keys, values, expirationTimes, and size.  A helpermethod was created and called in the `.put` method in order to `ensureCapacity`, and was responsible for checking the length of the Arrays via `keys.length`, and increasing the capacity by `GROWTH_FACTOR` if more space was needed - increasing the default array size by a factor of 2.  After checking if the cache has the storage capacity, the `.put` method increments adds the arguments passed in for key, value, and expiration time - it increments the size by one.
 
-### The exercise
+`isEmpty()` is a boolean method that will return true only if size is equal to 0. 
 
-Fast-forward to today, the simple aged cache presented here combines both whiteboard and coding approaches.
+`size()` is a method that will return the "size" of the array, which is stored in the variable `size`.
 
-The exercise - get the tests to pass!
+`.get(Object key)` retrieves the value associated with the `key` passed in as an argument.  It uses a `for` loop to iterate through the keys until it findes the key that matches the argument.  Then, it checks if the key is expired.  If the key is not expired, it returns the value associated with that key.  If it is expired, it removes the key and value, resets the expiration time, and decrements the size - returns null.  This was my solution to removing the expired item and I do not think it is the best solution.
 
-- Explore using an inner class `ExpirableEntry`
-- Try not using built in collection classes; Lists, Maps, or Sets.
-- Try both Java and Kotlin examples.
+In my next PR, I will remove the functionality from `.get` method that checks for expired key, since it may not be necessary there.  Instead, I will create a subclass called `ExpiredEntries` which will use a scheduler to periodically check the array for expired keys and removed them. 
 
-```java
-package io.collective;
 
-import java.time.Clock;
-
-public class SimpleAgedCache {
-
-    public SimpleAgedCache(Clock clock) {
-    }
-
-    public SimpleAgedCache() {
-    }
-
-    public void put(Object key, Object value, int retentionInMillis) {
-    }
-
-    public boolean isEmpty() {
-        return false;
-    }
-
-    public int size() {
-        return 0;
-    }
-
-    public Object get(Object key) {
-        return null;
-    }
-}
-```
-Hope you enjoy the exercise!
-
-Thanks, @barinek
+ @barinek
 
 © 2021 by Initial Capacity, Inc. All rights reserved.
 
