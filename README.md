@@ -4,7 +4,7 @@ This is my implimentation of the "simple aged cache" from "Fundamental of Softwa
 
 ## Setup
 
-I added the repository to my local hardrive from a zip file provied in the coursework.  I the created a repository of my own for version control.  The project uses `Java` with `IntelliJ IDEA`.  The initial repo from class included the `.github` workflow - `build.yml`.  It also included `gradle` to automate the application build.  In addition, the `JUnit` test suite with 4 failing tests came with the project.  The objective was to build the SimpleAgedCache in Java and/or Kotlin.  I chose Java for this first iteration.
+I added the repository to my local hardrive from a zip file provied in the coursework.  I the created this remote repository of my own for version control.  The project uses `Java` with `IntelliJ IDEA`.  The initial repo from class included the `.github` workflow - `build.yml`.  It also included `gradle` to automate the application build.  In addition, the `JUnit` test suite with 4 failing tests came with the project.  The objective was to build the SimpleAgedCache in Java and/or Kotlin.  I chose Java for this first iteration.
 
 ## Implementation 
 
