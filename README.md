@@ -1,6 +1,6 @@
 # Simple Aged Cache
 
-This is my implimentation of the "simple aged cache" from "Fundamental of Software Architecture for Big Data" class by Mike Barinek and Tyson Gern, lecturers in the Computer Science program at University of Colorado Boulder.  The is my reflection on the exercise for educational purposes.
+This is my implimentation of the "simple aged cache" from "Fundamental of Software Architecture for Big Data" class by Mike Barinek and Tyson Gern, lecturers in the Computer Science program at University of Colorado Boulder.  This is my reflection on the exercise for educational purposes.
 
 ## Setup
 
