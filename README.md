@@ -28,6 +28,7 @@ This is my first school based exercise I have done that required Java.  I have p
 
 I found that Ruby translates well to Java in many ways, both being Object Oriented Programming languages.  After figuring out how to read the error messages and setting up break points, I started to see OOP principles and the exercise clicked.
 
+# Credits
 
  @barinek
 
