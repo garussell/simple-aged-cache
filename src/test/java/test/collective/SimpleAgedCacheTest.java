@@ -51,7 +51,7 @@ public class SimpleAgedCacheTest {
         assertEquals(2, expired.size()); //Added to make sure .put works as expected
         clock.offset(Duration.ofMillis(3000));
 
-        expired.runCleanupTask();
+        expired.runCleanupTask(); 
 
         assertEquals(1, expired.size());
         assertEquals("anotherValue", expired.get("anotherKey"));

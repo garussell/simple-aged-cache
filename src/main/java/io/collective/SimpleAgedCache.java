@@ -8,11 +8,11 @@ public class SimpleAgedCache {
     private static final int INITIAL_CAPACITY = 10;
     private static final int GROWTH_FACTOR = 2;
 
-    protected Object[] keys;
-    protected Object[] values;
-    protected long[] expirationTimes;
+    private Object[] keys;
+    private Object[] values;
+    private long[] expirationTimes;
     private final Clock clock;
-    protected int size;
+    private int size;
     private final ExpiredEntry expiredEntry;
 
     public SimpleAgedCache(Clock clock) {
@@ -22,11 +22,11 @@ public class SimpleAgedCache {
         this.expirationTimes = new long[INITIAL_CAPACITY];
         this.size = 0;
 
-        // Instantiate ExpiredEntry
+        // Instantiate ExpiredEntry class
         this.expiredEntry = new ExpiredEntry(this, clock);
     }
 
-    // Methods to access cache attributes
+    // Getter methods to access cache attributes
     public Object[] getKeys() {
         return keys;
     }
@@ -90,5 +90,4 @@ public class SimpleAgedCache {
         }
         return null;
     }
-
 }
