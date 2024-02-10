@@ -18,7 +18,9 @@ The constructors have private instance variables that include clock (imported), 
 
 `size()` is a method that will return the "size" of the array, which is stored in the instance variable `size`.
 
-`.get(Object key)` retrieves the value associated with the `key` passed in as an argument.  It uses a `for` loop to iterate through the keys array until it finds the key that matches the key passed in as an argument.  Then, it checks if the key is expired.  If the key is not expired, it returns the value associated with that key.  If it is expired, it removes the key and value, resets the expiration time, decrements the size, and returns null.  This was my solution to removing the expired item and in hindsight I do not think it is the best solution.
+`.get(Object key)` retrieves the value associated with the `key` passed in as an argument.  It uses a `for` loop to iterate through the keys array until it finds the key that matches the key passed in as an argument.  Then, it checks if the key is expired.  If the key is not expired, it returns the value associated with that key.  If it is expired, it removes the key and value, resets the expiration time, decrements the size, and returns null.  
+
+This implementation required me to modify the JUnit for this method - adding one necessary line to call the `.get` method in order to removed the expired time.  This was my solution to removing the expired item and in hindsight I do not think it is the best solution.  
 
 In my next PR, I will remove the functionality from `.get` method that checks for expired key, since it may not be necessary there.  Instead, I will create a subclass called `ExpiredEntries` which will use a scheduler to periodically check the array for expired keys and removed them. 
 
