@@ -1,17 +1,22 @@
 package io.collective;
 
 import java.time.Clock;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.Arrays;
 
 public class SimpleAgedCache {
+    private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private static final int INITIAL_CAPACITY = 10;
     private static final int GROWTH_FACTOR = 2;
 
-    private Object[] keys;
-    private Object[] values;
-    private long[] expirationTimes;
-    private final Clock clock;
-    private int size;
+    protected Object[] keys;
+    protected Object[] values;
+    protected long[] expirationTimes;
+    protected final Clock clock;
+    protected int size;
+    private final ExpiredEntry expiredEntry;
 
     public SimpleAgedCache(Clock clock) {
         this.clock = clock;
@@ -19,6 +24,16 @@ public class SimpleAgedCache {
         this.values = new Object[INITIAL_CAPACITY];
         this.expirationTimes = new long[INITIAL_CAPACITY];
         this.size = 0;
+
+        // Initialize the scheduler for cleanup
+        scheduler.scheduleAtFixedRate(this::runCleanupTask, 0, 1, TimeUnit.MINUTES);
+
+        // Instantiate ExpiredEntry
+        this.expiredEntry = new ExpiredEntry(clock);
+    }
+
+    private void runCleanupTask() {
+        expiredEntry.cleanupExpiredEntries(keys, values, expirationTimes, size);
     }
 
     public SimpleAgedCache() {
